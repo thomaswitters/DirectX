@@ -9,7 +9,7 @@ namespace dae
 		m_pResource{},
 		m_pSRV{}
 	{
-		m_pSurface = SDL_CreateRGBSurface(0, m_pSurface->w, m_pSurface->h, 32, 0, 0, 0, 0);
+		m_pSurface = SDL_CreateRGBSurface(0, pSurface->w, pSurface->h, 32, 0, 0, 0, 0);
 
 
 	}
@@ -85,5 +85,37 @@ namespace dae
 			std::cerr << "Failed to create shader resource view: " << hr << std::endl;
 			//return nullptr;
 		}
+		
+
+	}
+
+	ColorRGB Texture::Sample(const Vector2& uv) const
+	{
+		//SDL_Surface* m_pSurface{ nullptr };
+		//uint32_t* m_pSurfacePixels{ nullptr };
+		//TODO
+		//Sample the correct texel for the given uv
+		//Texture::Sample > Samples a specific pixel from the SurfacePixels 
+		//m_pSurfacePixels
+
+		int texWidth = m_pSurface->w;
+		int texHeight = m_pSurface->h;
+
+		int pixelX = static_cast<int>(uv.x * texWidth);
+		int pixelY = static_cast<int>(uv.y * texHeight);
+
+		pixelX = std::max(0, std::min(texWidth - 1, pixelX));
+		pixelY = std::max(0, std::min(texHeight - 1, pixelY));
+
+		int pixelIndex = pixelY * texWidth + pixelX;
+
+		uint8_t r, g, b;
+		SDL_GetRGB(m_pSurfacePixels[pixelIndex], m_pSurface->format, &r, &g, &b);
+
+		float normalizedB = r / 255.0f;
+		float normalizedG = g / 255.0f;
+		float normalizedR = b / 255.0f;
+
+		return ColorRGB(normalizedR, normalizedG, normalizedB);
 	}
 }

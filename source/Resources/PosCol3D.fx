@@ -6,14 +6,14 @@ struct VS_INPUT
 {
     float3 Position : POSITION;
     float3 Color : COLOR;
-    //float2 TexCoord : TEXCOORD;
+    float2 TexCoord : TEXCOORD;
 };
 
 struct VS_OUTPUT
 {
     float4 Position : SV_POSITION;
     float3 Color : COLOR;
-    //float2 TexCoord : TEXCOORD;
+    float2 TexCoord : TEXCOORD;
 };
 
 //-----------------------
@@ -28,14 +28,14 @@ VS_OUTPUT VS(VS_INPUT input)
     VS_OUTPUT output = (VS_OUTPUT)0;
     output.Position = mul(float4(input.Position, 1.0f), gWorldViewProj);
     output.Color = input.Color;
-    //output.TexCoord = input.TexCoord;
+    output.TexCoord = input.TexCoord;
     return output;
 }
 
 //-----------------------
 // Pixel Shader
 //-----------------------
-
+      
 SamplerState samPoint
 {
     filter = MIN_MAG_MIP_POINT;
@@ -44,13 +44,14 @@ SamplerState samPoint
 };
 
 float4 PS(VS_OUTPUT input) : SV_TARGET
-{
+ {
     // Sample the texture using the specified sampler state
-    //float4 texColor = gDiffuseMap.Sample(samPoint, input.TexCoord);
-    
-    //return texColor * float4(input.Color, 1.0f);
-    return float4(input.Color, 1.0f);
+    float4 texColor = gDiffuseMap.Sample(samPoint, input.TexCoord);
 
+    return texColor * float4(input.Color, 1.0f);
+    //return float4(input.Color, 1.0f);
+
+    //return float4(0, 1, 0, 0);
 }
 
 //-----------------------

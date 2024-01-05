@@ -7,7 +7,7 @@ namespace dae
 	Mesh::Mesh(Effect* pEffect, ID3D11Device* pDevice, std::vector<Vertex_PosCol> vertices, std::vector<uint32_t> indices)
 	{
 		//Create Vertex Layout
-		static constexpr uint32_t numElemets{ 2 };
+		static constexpr uint32_t numElemets{ 3 };
 		D3D11_INPUT_ELEMENT_DESC vertexDesc[numElemets]{};
 
 		vertexDesc[0].SemanticName = "POSITION";
@@ -20,10 +20,10 @@ namespace dae
 		vertexDesc[1].AlignedByteOffset = 12;
 		vertexDesc[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 
-		//vertexDesc[2].SemanticName = "TEXCOORD";
-		//vertexDesc[2].Format = DXGI_FORMAT_R32G32_FLOAT;
-		//vertexDesc[2].AlignedByteOffset = 24;  // Assuming 4 floats for POSITION and 3 floats for COLOR
-		//vertexDesc[2].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+		vertexDesc[2].SemanticName = "TEXCOORD";
+		vertexDesc[2].Format = DXGI_FORMAT_R32G32_FLOAT;
+		vertexDesc[2].AlignedByteOffset = 24;  // Assuming 4 floats for POSITION and 3 floats for COLOR
+		vertexDesc[2].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 
 		//Create Input Layout
 		D3DX11_PASS_DESC passDesc{};

@@ -127,6 +127,8 @@ namespace dae {
 			Matrix worldMatrix = scaleTransform * translationTransform * rotationTransform;
 			Matrix WorldViewProjectionMatrix = worldMatrix * m_pCamera->viewMatrix * m_pCamera->projectionMatrix;
 			
+			//vertex.uv
+			//textureUvGrid->Sample(vertex.uv);
 			m_pEffect->SetWorldViewProjection(WorldViewProjectionMatrix);
 			m_pEffect->SetDiffuseMap(textureUvGrid);
 			m_pMesh->Render(m_pEffect, m_pDeviceContext);
